@@ -1,0 +1,16 @@
+tables:
+  # Tables with rows lesser than min_row_count will be fully imported with no filters applied
+  min_row_count: 20
+
+  # For tables with no filters, the maximum number of rows to import
+  max_row_count: 1000
+
+  # specify table specific filters here
+  filters:
+    #users: email_id in ('a@b.com', 'c@d.com')
+
+columns:
+  # specify column filters applicable to all tables that contain that column
+  filters:
+    #age: age < 10
+

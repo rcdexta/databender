@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+require 'thor'
+$:.unshift(File.dirname(__FILE__) + '/../lib') unless $:.include?(File.dirname(__FILE__) + '/../lib')
+require 'databender/cli/main'
+
+Databender::Cli::Main.start
