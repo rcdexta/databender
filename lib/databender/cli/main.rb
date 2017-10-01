@@ -1,5 +1,4 @@
 require_relative '../../../lib/databender/runner'
-require 'shell_whisperer'
 
 module Databender
   module Cli
