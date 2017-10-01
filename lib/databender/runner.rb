@@ -14,11 +14,23 @@ module Databender
   class Runner
     extend Databender::SQLHelper
 
-
-
     def self.generate_script(params)
       template = File.read("#{GEM_ROOT}/subset.sh.mustache")
       File.write('subset.sh', Mustache.render(template, params))
+    end
+
+    def self.print_report(source, report_queries)
+      report = []
+      report_queries.each do |rq|
+        all_count = source.execute_count(rq[:all_count_sql]).first.first
+        subset_count = source.execute_count(rq[:filter_count_sql]).count
+        report << [rq[:table], all_count, subset_count, rq[:filter]]
+      end
+      headings = ['Table Name', 'Total Rows', 'Fetched Rows', 'Filter(s)']
+      tty = Terminal::Table.new headings: headings, rows: report
+      puts ''
+      puts 'Generating report...'
+      puts tty
     end
 
     def self.apply_column_filters(table, source, source_db, target_db)
@@ -36,8 +48,6 @@ module Databender
         exit(1)
       end
 
-      report = []
-
       Databender::Config.load!(db_name)
       target_db = Databender::Config.target_db
       source_db = Databender::Config.source.database
@@ -53,11 +63,12 @@ module Databender
 
       ordered_tables = Databender::TableOrder.order_by_foreign_key_dependency(source, source_db, all_tables)
 
+      report_queries = []
+
       entries = ordered_tables.collect do |table|
         column_filters = apply_column_filters table, source, source_db, target_db
-        sql = count_all_query source_db, table.name
-        all_count = source.execute_count(sql).first.first
-        sql, count_query, filter = if Databender::Config.table_filters.keys.include?(table.name)
+        all_count_sql = count_all_query source_db, table.name
+        sql, filter_count_sql, filter = if Databender::Config.table_filters.keys.include?(table.name)
                              conditions = merge_filters(Databender::Config.table_filters[table.name], column_filters)
                              [insert_into_select(source_db, table.name, conditions),
                               count_filtered_query(source_db, table.name, conditions), conditions]
@@ -67,21 +78,15 @@ module Databender
                              else
                                parents = Databender::TableOrder.parent_tables_for(table.name)
                                condition = parents.present? ? where_clause_by_reference(target_db, parents) : nil
-                               [insert_into_select(source_db, table.name, condition), count_filtered_query(source_db, table.name, condition), nil]
+                               [insert_into_select(source_db, table.name, condition), count_filtered_query(source_db, table.name, condition), condition]
                              end
                                    end
-        subset_count = source.execute_count(count_query).count
-        report << [table.name, all_count, subset_count, filter && filter]
+        report_queries << {table: table.name, all_count_sql: all_count_sql, filter_count_sql: filter_count_sql, filter: filter}
         {sql: sql, table: table.name}
       end
 
-      headings = ['Table Name', 'Total Rows', 'Fetched Rows', 'Filter(s)']
-      tty = Terminal::Table.new headings: headings, rows: report
-      puts tty
-
-
       self.generate_script source: Databender::Config.source, target_db: target_db, entries: entries, database: db_name
-
+      [source, report_queries]
     end
   end
 end

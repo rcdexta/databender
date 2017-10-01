@@ -29,9 +29,9 @@ module Databender
       desc 'generate', 'Generate subset given a database'
       def generate
         say "Creating subset for #{options[:db_name]}", :green
-        Databender::Runner.process! options[:db_name]
-        puts ''
+        source, report_queries = Databender::Runner.process! options[:db_name]
         run 'sh subset.sh', verbose: false
+        Databender::Runner.print_report source, report_queries
       end
 
     end

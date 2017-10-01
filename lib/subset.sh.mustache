@@ -36,5 +36,5 @@ mkdir -p dumps
 
 MYSQL_PWD='{{source.password}}' mysqldump -u{{source.username}} -h{{source.host}} -P{{source.port}} {{target_db}} | gzip > dumps/{{database}}.sql.gz
 
-echo "\033[92mThe dump of db_subset is available at dumps/{{database}}.sql.gz. Use gunzip to extract followed by mysql command to load. The subset database is intact in the db server too!"
+echo "\033[92mThe dump of db_subset is available at dumps/{{database}}.sql.gz. Use gunzip to extract followed by mysql command to load. The subset database is intact in the db server too!\033[0m"
 

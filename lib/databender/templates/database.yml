@@ -1,8 +1,8 @@
-<%= options[:database] %>:
+<%= options[:db_name] %>:
     adapter: mysql2
     host: 127.0.0.1
     encoding: utf8
-    database: <%= options[:database] %>
+    database: <%= options[:db_name] %>
     username: root
     password:
     port: 3306

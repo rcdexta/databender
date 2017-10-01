@@ -20,7 +20,7 @@ module Databender
       execute(%[
                   SELECT table_name
                   FROM information_schema.tables
-                  WHERE table_schema = '#{db_name}';
+                  WHERE table_schema = '#{db_name}' and table_type = 'BASE TABLE';
               ])
     end
 
