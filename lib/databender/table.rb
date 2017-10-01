@@ -1,4 +1,4 @@
-module Dbclip
+module Databender
   class Table
     attr_accessor :name, :rank, :parents
 

@@ -1,4 +1,4 @@
-module Dbclip
+module Databender
   class ForeignConstraint
     attr_accessor :table_name, :column_name, :ref_table_name, :ref_column_name
 

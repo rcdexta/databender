@@ -1,4 +1,4 @@
-module Dbclip
+module Databender
   class TableOrder
 
     class << self

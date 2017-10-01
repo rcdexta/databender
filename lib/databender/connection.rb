@@ -1,4 +1,7 @@
-module Dbclip
+require 'active_record'
+require 'databender/foreign_constraint'
+
+module Databender
   class Connection
 
     def initialize(connection_params)

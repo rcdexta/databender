@@ -1,9 +1,11 @@
-module Dbclip
+require 'databender/config'
+
+module Databender
   module SQLHelper
 
     def insert_into_select(source_db, table, condition = nil)
       sql = 'INSERT INTO %s SELECT * FROM %s.%s' % [table, source_db, table]
-      sql += condition ? ' WHERE %s' % [condition] : " limit #{Dbclip::Config.max_rows}"
+      sql += condition ? ' WHERE %s' % [condition] : " limit #{Databender::Config.max_rows}"
       sql
     end
 

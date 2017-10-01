@@ -1,7 +1,10 @@
+require_relative '../../../lib/databender/runner'
+
 module Databender
   module Cli
     class Main < Thor
       include Thor::Actions
+
 
       source_root File.expand_path('../../templates', __FILE__)
 
@@ -22,6 +25,14 @@ module Databender
       desc 'dry_run', 'Run a dry-run of the subset script'
       def dry_run
         say "Analyzing #{options[:database]}", :green
+      end
+
+      option :database, required: true, desc: 'Name of the database'
+      option :config_path, required: true, desc: 'Location of database.yml'
+      desc 'generate', 'Generate subset given a database'
+      def generate
+        say "Creating subset for #{options[:database]}", :green
+        Databender::Runner.process! options[:database], options[:config_path]
       end
 
     end
