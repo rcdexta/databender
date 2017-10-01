@@ -1,31 +1,43 @@
-# Databender
+# databender
 
-Database Subset Generator
+Ruby script to generate a database subset driven by configuration based rule-engine
 
-## Installation
+#### Why
 
-Add this line to your application's Gemfile:
+If you have to quickly boot up a micro-service or any application in your local machine and you are stuck because the service has dependent seed data that needs to be present in the database before starting up, you have couple options:
 
-```ruby
-gem 'databender'
+* automate data generation using tools like [bobcat](https://github.com/ThoughtWorksStudios/bobcat)
+* use the fixtures that power your testing suite to generate the seed data
+* generate a subset of the data from one of the working environments (staging, uat)
+
+Databender aims to offer an easy and seamless solution to solve the last option.
+
+#### Features
+
+* configuration driven rule engine
+* can add filters at table level or globally at column level
+* can resolve sequence of tables to import based on referential integrity (foreign key dependencies)
+
+#### Installation
+
+Install the gem to install the command-line cli
+
+```bash
+$ gem install databender
 ```
 
-And then execute:
+and the type 
 
-    $ bundle
+```shell
+$ databender --help
+```
 
-Or install it yourself as:
+to know the list of available commands.
 
-    $ gem install databender
+#### Documentation
 
-## Usage
 
-TODO: Write usage instructions here
 
-## Contributing
+#### License
 
-1. Fork it ( https://github.com/[my-github-username]/databender/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create a new Pull Request
+MIT
