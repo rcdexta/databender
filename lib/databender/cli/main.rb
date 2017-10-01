@@ -1,4 +1,5 @@
 require_relative '../../../lib/databender/runner'
+require 'shell_whisperer'
 
 module Databender
   module Cli
@@ -30,7 +31,8 @@ module Databender
       def generate
         say "Creating subset for #{options[:db_name]}", :green
         Databender::Runner.process! options[:db_name]
-        `sh subset.sh`
+        puts ''
+        run 'sh subset.sh', verbose: false
       end
 
     end

@@ -21,21 +21,20 @@ execute 'create database {{target_db}};'
 MYSQL_PWD='{{source.password}}' mysql -u{{source.username}} -h{{source.host}} -P{{source.port}} {{target_db}} < /tmp/databender_schema.sql
 
 echo ""
-echo "Processing tables..."
+echo "Generating subset database..."
 
 ## Process each table
 {{#entries}}
 echo "\033[36mProcessing \033[32m{{{table}}}\033[0m..."
 target_execute "{{{sql}}}"
-echo ""
-echo ""
 {{/entries}}
 
-echo "Done.."
+echo "Done!"
+echo ""
 
 mkdir -p dumps
 
 MYSQL_PWD='{{source.password}}' mysqldump -u{{source.username}} -h{{source.host}} -P{{source.port}} {{target_db}} | gzip > dumps/{{database}}.sql.gz
 
-echo "The dump of db_subset is available at dumps/{{database}}.sql.gz. Use gunzip to extract followed by mysql command to load"
+echo "\033[92mThe dump of db_subset is available at dumps/{{database}}.sql.gz. Use gunzip to extract followed by mysql command to load. The subset database is intact in the db server too!"
 
