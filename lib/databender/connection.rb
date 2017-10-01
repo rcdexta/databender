@@ -12,6 +12,10 @@ module Databender
       @conn.execute(sql).entries.flatten.compact.map(&:to_sym)
     end
 
+    def execute_count(sql)
+      @conn.execute(sql)
+    end
+
     def tables_for(db_name)
       execute(%[
                   SELECT table_name

@@ -10,7 +10,6 @@ module Databender
         tables_with_no_dependencies.each { |table_name| @tables_with_rank[table_name].rank = 0 }
         @dependency_map.keys.each do |table|
           rank_for(table)
-          # p @tables_with_rank[table]
         end
         @tables_with_rank.values.flatten.sort {|x,y| x.rank <=> y.rank}
       end

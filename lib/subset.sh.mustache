@@ -25,7 +25,7 @@ echo "Processing tables..."
 
 ## Process each table
 {{#entries}}
-echo "\033[36m{{table}}:\033[0m \033[32m{{{sql}}}\033[0m"
+echo "\033[36mProcessing \033[32m{{{table}}}\033[0m..."
 target_execute "{{{sql}}}"
 echo ""
 echo ""

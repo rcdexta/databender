@@ -24,6 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'mysql2'
   spec.add_dependency 'mustache'
   spec.add_dependency 'configatron'
+  spec.add_dependency 'terminal-table'
 
   spec.add_development_dependency 'bundler', '~> 1.7'
   spec.add_development_dependency 'rake', '~> 10.0'

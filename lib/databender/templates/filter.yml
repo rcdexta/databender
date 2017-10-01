@@ -8,9 +8,11 @@ tables:
   # specify table specific filters here
   filters:
     #users: email_id in ('a@b.com', 'c@d.com')
+    #employees: age > 30
 
 columns:
   # specify column filters applicable to all tables that contain that column
   filters:
-    #age: age < 10
+    #status: status = 'ACTIVE'
+    #created_at: created_at > '2017-01-01 00:00:00'
 
