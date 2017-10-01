@@ -13,3 +13,6 @@
 *.a
 mkmf.log
 .idea
+/config
+/dumps
+/subset.sh

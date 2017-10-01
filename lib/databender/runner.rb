@@ -18,13 +18,13 @@ module Databender
       File.write('subset.sh', Mustache.render(template, params))
     end
 
-    def self.process!(db_name, config_path)
+    def self.process!(db_name)
       unless db_name
-        puts 'DATABASE environment variable not set! Terminating!'
+        puts 'Parameter db_name not specified. Terminating!'
         exit(1)
       end
 
-      Databender::Config.load!(db_name, config_path)
+      Databender::Config.load!(db_name)
       target_db = Databender::Config.target_db
       source_db = Databender::Config.source.database
 

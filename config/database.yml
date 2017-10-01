@@ -1,8 +1,0 @@
-magic_list_service_test:
-    adapter: mysql2
-    host: 127.0.0.1
-    encoding: utf8
-    database: magic_list_service_test
-    username: root
-    password:
-    port: 3306
