@@ -2,6 +2,8 @@
 
 Ruby script to generate a database subset driven by configuration based rule-engine
 
+[![Gem Version](https://badge.fury.io/rb/databender.svg)](http://badge.fury.io/rb/databender)
+
 #### Demo
 
 ![alt tag](https://github.com/rcdexta/databender/raw/master/assets/demo.gif)
