@@ -1,6 +1,10 @@
-# databender
+# Databender
 
 Ruby script to generate a database subset driven by configuration based rule-engine
+
+#### Demo
+
+![alt tag](https://github.com/rcdexta/databender/raw/master/assets/demo.gif)
 
 #### Why
 
@@ -34,8 +38,45 @@ $ databender --help
 
 to know the list of available commands.
 
-#### Documentation
+#### Usage
 
+First initialise the configuration for the database you would like to take a subset of
+
+```powershell
+$ databender init --db-name=employees
+```
+
+> Note: I have taken the MySQL public dataset available here: https://github.com/datacharmer/test_db as the sample dataset to illustrate the gem
+
+This should create a `config` folder and a `database.yml` file. Specify the connection params to the source database in `database.yml` file. Inspect `filters/employees.yml`  to specify the rules for generating the subset. The comments in the file should serve as good documentation to specify the table and column filters. Find a sample filter configuration below.
+
+```yaml
+tables:
+  # Tables with rows lesser than min_row_count will be fully imported with no filters applied
+  min_row_count: 20
+
+  # For tables with no filters, the maximum number of rows to import
+  max_row_count: 1000
+
+  # specify table specific filters here
+  filters:
+    employees: hire_date >= '1994-01-01'
+    departments: dept_name in ('d004', 'd005')
+
+columns:
+  # specify column filters applicable to all tables that contain that column
+  filters:
+    birth_date: birth_date >= '1950-01-01'
+
+```
+
+Now you can run the generator using
+
+```shell
+$ databender generate --db-name=employees
+```
+
+This should generate another database called `employees_subset` with the subset data and also create a dump of the file gzipped.
 
 
 #### License
