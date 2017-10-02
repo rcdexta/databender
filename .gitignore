@@ -16,3 +16,4 @@ mkmf.log
 /config
 /dumps
 /subset.sh
+*.gem
